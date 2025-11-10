@@ -183,14 +183,18 @@ class PluginWrapper
      * @param string[] $paths
      * @return string[]
      */
-    protected function absolutePaths($paths)
+    protected function absolutePaths(array $paths): array
     {
         $return = array();
+
         foreach ($paths as $path) {
-            if (!$this->filesystem->isAbsolutePath($path)) {
-                $path = getcwd().'/'.$path;
+            if (!empty($path)) {
+                if (!$this->filesystem->isAbsolutePath($path)) {
+                    $path = getcwd().'/'.$path;
+                }
+
+                $return[] = $path;
             }
-            $return[] = $path;
         }
 
         return $return;
